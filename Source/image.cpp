@@ -85,8 +85,15 @@ void Image::ChangeSaturation(double factor)
 }
 
 void Image::ChangeGamma(double factor)
-{
-  /* Your Work Here (section 3.2.4) */
+{   for (int32_t i = 0; i < num_pixels; i++)
+    {   double tmp_r = (double) pixels[i].r / 255;
+        double tmp_g = (double) pixels[i].g / 255;
+        double tmp_b = (double) pixels[i].b / 255;
+        pixels[i].r = (Component) round( pow( tmp_r, 1.0/factor ) * 255 );
+        pixels[i].g = (Component) round( pow( tmp_g, 1.0/factor ) * 255 );
+        pixels[i].b = (Component) round( pow( tmp_b, 1.0/factor ) * 255 );
+    }
+    /* Your Work Here (section 3.2.4) */
 }
 
 Image* Image::Crop(int x, int y, int w, int h)
