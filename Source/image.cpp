@@ -97,9 +97,20 @@ void Image::ChangeGamma(double factor)
 }
 
 Image* Image::Crop(int x, int y, int w, int h)
-{
-  /* Your Work Here (section 3.2.5) */
-  return NULL ;
+{   assert(x > 0 && y > 0 && x <  width && y <  height);
+    assert(w > 0 && h > 0 && w <= width && h <= height);
+    if ( x + w > width  ) w = width  - x;
+    if ( y + h > height ) h = height - y;
+    Image* ret_image = new Image(w, h);
+    int32_t px_pos = 0;
+    for (int32_t i = y; i < y + h; i++)
+    {   for (int32_t j = x; j < x + w; j++)
+        {   ret_image->pixels[px_pos] = GetPixel(j, i);
+            px_pos++;
+        }
+    }
+    /* Your Work Here (section 3.2.5) */
+    return ret_image ;
 }
 
 /*
@@ -123,7 +134,7 @@ void Image::RandomDither (int nbits)
 
 
 /* Matrix for Bayer's 4x4 pattern dither. */
-/* uncomment its definition if you need it */
+/* uncomment its definition if you need it */ 
 
 /*
 static int Bayer4[4][4] =
